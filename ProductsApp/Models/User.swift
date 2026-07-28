@@ -18,3 +18,9 @@ struct User {
     let avatarColor: UIColor
     let theme: Theme
 }
+
+enum AvatarColor {
+    case blue
+    case green
+    case orange
+}
