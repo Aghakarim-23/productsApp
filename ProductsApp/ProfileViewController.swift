@@ -135,16 +135,12 @@ class ProfileViewController: UIViewController {
 
         button.setTitle("Edit profile", for: .normal)
         button.setTitleColor(.white, for: .normal)
-        button.addTarget(
-            self,
-            action: #selector(editProfile),
-            for: .touchUpInside
-        )
         button.backgroundColor = .systemBlue
         button.layer.cornerRadius = 12
 
         return button
     }()
+    
 
     @objc private func editProfile() {
         let editVC = EditProfileViewController(user: user)
@@ -166,6 +162,7 @@ class ProfileViewController: UIViewController {
         addSubViews()
         addConstraints()
         configureUI()
+        setupActions()
     }
     
     private func configureUI() {
@@ -261,6 +258,14 @@ class ProfileViewController: UIViewController {
             make.horizontalEdges.equalToSuperview().inset(16)
             make.height.equalTo(50)
         }
+    }
+    
+    private func setupActions() {
+        editProfileButton.addTarget(
+             self,
+             action: #selector(editProfile),
+             for: .touchUpInside
+         )
     }
 
 }
