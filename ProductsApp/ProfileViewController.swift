@@ -79,13 +79,6 @@ class ProfileViewController: UIViewController {
         themeStack.alignment = .center
         return themeStack
     }()
-//
-//    private let themeImageView: UIImageView = {
-//        let imageView = UIImageView()
-//        imageView.image = UIImage(systemName: "sun.max")
-//        imageView.tintColor = .orange
-//        return imageView
-//    }()
 
     private let themeValueLabel: UILabel = {
         let label = UILabel()
@@ -204,7 +197,6 @@ class ProfileViewController: UIViewController {
         settingsStackView.addArrangedSubview(themeContainerView)
         themeContainerView.addSubview(themeLabel)
         themeContainerView.addSubview(themeStackValueView)
-//        themeStackValueView.addArrangedSubview(themeImageView)
         themeStackValueView.addArrangedSubview(themeValueLabel)
 
         settingsStackView.addArrangedSubview(avatarContainerView)
