@@ -10,15 +10,14 @@ import UIKit
 
 class ProfileViewController: UIViewController {
 
-
     private var user = User(
         name: "Ağakərim",
         email: "aga@gmail.com",
         avatarColor: .systemBlue,
         theme: .light
     )
-    
-    // Profile Stack
+
+    // 1 - Profile Stack
 
     private let avatarView: UIView = {
         let view = UIView()
@@ -28,7 +27,6 @@ class ProfileViewController: UIViewController {
 
     private let avatarLabel: UILabel = {
         let label = UILabel()
-        label.text = "A"
         label.font = .systemFont(ofSize: 36, weight: .bold)
         label.textColor = .white
         label.textAlignment = .center
@@ -58,7 +56,7 @@ class ProfileViewController: UIViewController {
         return stackView
     }()
 
-    // Settings Stack
+    // 2 - Settings Stack
 
     private let themeContainerView: UIView = {
         let themeContainer = UIView()
@@ -73,7 +71,6 @@ class ProfileViewController: UIViewController {
         label.textColor = .systemGray
         return label
     }()
-
 
     private let themeValueLabel: UILabel = {
         let label = UILabel()
@@ -95,26 +92,16 @@ class ProfileViewController: UIViewController {
         return label
     }()
 
-    private let avatarStackValueView: UIStackView = {
-        let themeStack = UIStackView()
-        themeStack.axis = .horizontal
-        themeStack.spacing = 8
-        themeStack.alignment = .center
-        return themeStack
-    }()
-
-    private let avatarImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.image = UIImage(systemName: "circle.fill")
-        imageView.tintColor = .systemBlue
-        return imageView
-    }()
-
     private let avatarValueLabel: UILabel = {
         let label = UILabel()
-        label.text = "Blue"
         label.font = .systemFont(ofSize: 18, weight: .bold)
         return label
+    }()
+
+    private let avatarColorImage: UIImageView = {
+        let image = UIImageView()
+        image.image = UIImage(systemName: "circle.fill")
+        return image
     }()
 
     private let settingsStackView: UIStackView = {
@@ -135,12 +122,10 @@ class ProfileViewController: UIViewController {
 
         return button
     }()
-    
 
     @objc private func editProfile() {
         let editVC = EditProfileViewController(user: user)
         navigationController?.pushViewController(editVC, animated: true)
-        print("Edit profile button tapped")
     }
 
     override func viewDidLoad() {
@@ -159,13 +144,17 @@ class ProfileViewController: UIViewController {
         configureUI()
         setupActions()
     }
-    
+
     private func configureUI() {
+        
+        if let firstLetter = user.name.first {
+            avatarLabel.text = String(firstLetter)
+        }
+        
         nameLabel.text = user.name
         emailLabel.text = user.email
         avatarView.backgroundColor = user.avatarColor
-        avatarImageView.tintColor = user.avatarColor
-        
+
         switch user.theme {
         case .light:
             themeValueLabel.text = "☀️ Light"
@@ -174,7 +163,22 @@ class ProfileViewController: UIViewController {
 
         }
 
-        
+        switch user.avatarColor {
+        case UIColor.systemBlue:
+            avatarValueLabel.text = "Blue"
+
+        case UIColor.systemGreen:
+            avatarValueLabel.text = "Green"
+
+        case UIColor.systemOrange:
+            avatarValueLabel.text = "Orange"
+
+        default:
+            avatarValueLabel.text = "Unknown"
+        }
+
+        avatarColorImage.tintColor = user.avatarColor
+
     }
 
     private func addSubViews() {
@@ -192,9 +196,8 @@ class ProfileViewController: UIViewController {
 
         settingsStackView.addArrangedSubview(avatarContainerView)
         avatarContainerView.addSubview(avatarColorLabel)
-        avatarContainerView.addSubview(avatarStackValueView)
-        avatarStackValueView.addArrangedSubview(avatarImageView)
-        avatarStackValueView.addArrangedSubview(avatarValueLabel)
+        avatarContainerView.addSubview(avatarValueLabel)
+        avatarContainerView.addSubview(avatarColorImage)
 
         view.addSubview(editProfileButton)
     }
@@ -221,7 +224,7 @@ class ProfileViewController: UIViewController {
             make.leading.equalToSuperview().inset(16)
             make.centerY.equalToSuperview()
         }
-        
+
         themeValueLabel.snp.makeConstraints { make in
             make.trailing.equalToSuperview().inset(16)
             make.centerY.equalToSuperview()
@@ -236,10 +239,18 @@ class ProfileViewController: UIViewController {
             make.centerY.equalToSuperview()
         }
 
-        avatarStackValueView.snp.makeConstraints { make in
+        avatarColorImage.snp.makeConstraints { make in
+            make.centerY.equalToSuperview()
+            make.trailing.equalTo(avatarValueLabel.snp.leading).offset(-4)
+            make.size.equalTo(20)
+        }
+        
+        avatarValueLabel.snp.makeConstraints { make in
             make.centerY.equalToSuperview()
             make.trailing.equalToSuperview().inset(16)
         }
+        
+        
 
         settingsStackView.snp.makeConstraints { make in
             make.top.equalTo(profileStackView.snp.bottom).offset(24)
@@ -253,13 +264,13 @@ class ProfileViewController: UIViewController {
             make.height.equalTo(50)
         }
     }
-    
+
     private func setupActions() {
         editProfileButton.addTarget(
-             self,
-             action: #selector(editProfile),
-             for: .touchUpInside
-         )
+            self,
+            action: #selector(editProfile),
+            for: .touchUpInside
+        )
     }
 
 }
