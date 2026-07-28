@@ -17,6 +17,8 @@ class ProfileViewController: UIViewController {
         avatarColor: .systemBlue,
         theme: .light
     )
+    
+    // Profile Stack
 
     private let avatarView: UIView = {
         let view = UIView()
@@ -56,7 +58,7 @@ class ProfileViewController: UIViewController {
         return stackView
     }()
 
-    // Settings Stack part below
+    // Settings Stack
 
     private let themeContainerView: UIView = {
         let themeContainer = UIView()
@@ -72,13 +74,6 @@ class ProfileViewController: UIViewController {
         return label
     }()
 
-    private let themeStackValueView: UIStackView = {
-        let themeStack = UIStackView()
-        themeStack.axis = .horizontal
-        themeStack.spacing = 8
-        themeStack.alignment = .center
-        return themeStack
-    }()
 
     private let themeValueLabel: UILabel = {
         let label = UILabel()
@@ -93,7 +88,7 @@ class ProfileViewController: UIViewController {
         return avatarContainer
     }()
 
-    private let avatarlabel: UILabel = {
+    private let avatarColorLabel: UILabel = {
         let label = UILabel()
         label.text = "Avatar Color"
         label.textColor = .systemGray
@@ -193,11 +188,10 @@ class ProfileViewController: UIViewController {
 
         settingsStackView.addArrangedSubview(themeContainerView)
         themeContainerView.addSubview(themeLabel)
-        themeContainerView.addSubview(themeStackValueView)
-        themeStackValueView.addArrangedSubview(themeValueLabel)
+        themeContainerView.addSubview(themeValueLabel)
 
         settingsStackView.addArrangedSubview(avatarContainerView)
-        avatarContainerView.addSubview(avatarlabel)
+        avatarContainerView.addSubview(avatarColorLabel)
         avatarContainerView.addSubview(avatarStackValueView)
         avatarStackValueView.addArrangedSubview(avatarImageView)
         avatarStackValueView.addArrangedSubview(avatarValueLabel)
@@ -227,17 +221,17 @@ class ProfileViewController: UIViewController {
             make.leading.equalToSuperview().inset(16)
             make.centerY.equalToSuperview()
         }
-
-        themeStackValueView.snp.makeConstraints { make in
-            make.centerY.equalToSuperview()
+        
+        themeValueLabel.snp.makeConstraints { make in
             make.trailing.equalToSuperview().inset(16)
+            make.centerY.equalToSuperview()
         }
 
         avatarContainerView.snp.makeConstraints { make in
             make.height.equalTo(56)
         }
 
-        avatarlabel.snp.makeConstraints { make in
+        avatarColorLabel.snp.makeConstraints { make in
             make.leading.equalToSuperview().inset(16)
             make.centerY.equalToSuperview()
         }
