@@ -16,7 +16,7 @@ struct User {
     let name: String
     let email: String
     let avatarColor: UIColor
-    let theme: Theme
+    var theme: Theme
 }
 
 enum AvatarColor {

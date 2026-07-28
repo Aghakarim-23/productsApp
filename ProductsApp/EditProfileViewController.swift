@@ -34,7 +34,7 @@ class EditProfileViewController: UIViewController {
     }()
 
     private let categorySegmentedControl: UISegmentedControl = {
-        let control = UISegmentedControl(items: ["🌞 Light", "🌙 Dark"])
+        let control = UISegmentedControl(items: ["☀️ Light", "🌙 Dark"])
 
         control.selectedSegmentIndex = 0
 
@@ -122,14 +122,12 @@ class EditProfileViewController: UIViewController {
     
     private let currentThemeTitleLabel: UILabel = {
         let label = UILabel()
-        label.text = "Light"
         label.font = .systemFont(ofSize: 15, weight: .bold)
         return label
     }()
     
     private let currentAvatarTitleLabel: UILabel = {
         let label = UILabel()
-        label.text = "Blue"
         label.font = .systemFont(ofSize: 15, weight: .bold)
         return label
     }()
@@ -155,6 +153,7 @@ class EditProfileViewController: UIViewController {
         print(user)
         view.backgroundColor = .systemBackground
         setupUI()
+        configureUI()
 
     }
 
@@ -172,18 +171,57 @@ class EditProfileViewController: UIViewController {
 
         navigationItem.rightBarButtonItem = resetButton
 
+        
+
+        addSubviews()
+        addConstraints()
+        setupActions()
+    }
+    
+    private func configureUI() {
+        switch user.theme {
+        case .light:
+            currentThemeTitleLabel.text = "☀️ Light"
+            categorySegmentedControl.selectedSegmentIndex = 0
+        case .dark:
+            currentThemeTitleLabel.text = "🌙 Dark"
+            categorySegmentedControl.selectedSegmentIndex = 1
+
+        }
+        
+      
+        
+        switch user.avatarColor {
+        case .systemBlue:
+            currentAvatarTitleLabel.text = "Blue"
+        case .systemGreen:
+            currentAvatarTitleLabel.text = "Green"
+        case .systemOrange:
+            currentAvatarTitleLabel.text = "Orange"
+        default: break
+            
+        }
+        
+    }
+    
+    private func setupActions () {
         categorySegmentedControl.addTarget(
             self,
             action: #selector(categoryChanged),
             for: .valueChanged
         )
-
-        addSubviews()
-        addConstraints()
     }
 
     @objc private func categoryChanged() {
-        print("category selected")
+        let selectedIndex = categorySegmentedControl.selectedSegmentIndex
+        
+        if selectedIndex == 0 {
+            user.theme = .light
+        } else {
+            user.theme = .dark
+        }
+
+        configureUI()
     }
 
     private func addSubviews() {

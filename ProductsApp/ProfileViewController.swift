@@ -13,7 +13,7 @@ class ProfileViewController: UIViewController {
     private var user = User(
         name: "Ağakərim",
         email: "aga@gmail.com",
-        avatarColor: .systemBlue,
+        avatarColor: .systemOrange,
         theme: .light
     )
 
